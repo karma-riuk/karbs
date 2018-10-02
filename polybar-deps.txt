@@ -1,0 +1,23 @@
+# Name of the dependecies, these are not the packages that you can find on apt
+cmake
+cairo
+libxcb
+python2
+python-xcbgen
+xcb
+xcb-proto
+xcb-util-image
+xcb-util-wm
+xcb-util-cursor
+xcb-util-xrm
+xcb-xkb
+xcb-ewmh-dev
+alsa-lib
+libpulse
+i3-wm
+jsoncpp
+libmpdclient
+libcurl
+wireless-tools
+libiw-dev
+

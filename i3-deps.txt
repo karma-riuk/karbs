@@ -1,0 +1,17 @@
+dh-autoreconf
+libev-dev
+libstartup-notification0-dev
+libxcb-xkb-dev
+libxcb-randr0-dev
+libxcb-xinerama0-dev
+libxcb-util0-dev
+libxcb-cursor-dev
+libxcb-keysyms1-dev
+libxcb-icccm4-dev
+libxcb-xrm-dev
+libxkbcommon-dev
+libxkbcommon-x11-dev
+libyajl-dev
+libpcre3-dev
+libcairo2-dev
+libcogl-pango-dev

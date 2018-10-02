@@ -1,0 +1,36 @@
+A,git,is a version control system
+A,ranger,is an extensive terminal file manager that everyone likes
+A,calcurse,is a lightweight terminal-based calendar
+A,compton,for transparency and removing screen-tearing
+A,caffeine,is to prevent the desktop becoming idle in full-screen mode
+A,dosfstools,allows your computer to access dos-like filesystems
+A,dunst,is a suckless notification system
+A,feh,is a minimal image viewer
+A,ffmpeg,can record and splice video and audio on the command line
+A,firefox,is the only program on KARBS your girlfriend has ever heard of
+A,gnome-keyring,serves as the system keyring
+A,i3blocks,is the status bar
+A,i3lock,is the screen lock
+A,mpd,is a lightweight music daemon
+A,mpc,is a terminal interface for mpd
+A,ncmpcpp,a ncurses interface for music with multiple formats and a powerful tag editor
+A,network-manager,does exactly what it sounds like
+A,ntfs-3g,allows accessing NTFS partitions
+A,pulseaudio,is the audio system (>inb4 bloat)
+A,scrot,can take quick screenshots at your request
+A,tmux,is a terminal multiplexer and the dropdown window in KARBS
+A,texlive,is a decent selection of the TeX Live packages
+A,texlive-latex-extra,is some TeX Live: LaTeX additional packages
+A,texlive-extra-utils,is some TeX auxiliary programs
+A,unclutter,hides an inactive mouse
+A,unrar,extracts rar's
+A,unzip,unzips zips
+A,vim-pathogen,manages vim plugins
+A,w3m,is a terminal browser which can also view images
+A,wget,downloads sites and files on the command line
+A,youtube-dl,can download any YouTube video (or playlist or channel) when given the link
+A,zathura,is a pdf viewer with vim-like bindings
+A,python3-pip,is a Python package installer
+A,mediainfo,shows audio and video information and is used by ranger as well
+G,i3-gaps,is the main graphical user interface and window manager
+G,polybar,is a fast and easy-to-use tool for creating status bars
