@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Karma's Auto Rice Boostrapping Script (KARBS)
-# by Luke Smith <luke@lukesmith.xyz>
-# License: GNU GPLv3
+# by Karma Riuk <riukkarma@gmail.com>
 
 # You can provide a custom repository with -r or a custom programs csv with -p.
 # Otherwise, the script will use my defaults.
@@ -56,12 +55,29 @@ preinstallmsg () { \
 	dialog --title "Let's get this party started!" --yes-label "Let's go!" --no-label "No, nevermind..." --yesno "The rest of the installation will now be totally automated, so you can sit back and relax.\\n\\nIt will take some time, but when done, you can relax even more with your complete system.\\n\\nNow just press <Let's go!> and the system will begin installation!" 13 60 || { clear; exit; }
 }
 
+i3compile () {\
+    # clone the repository
+    git clone https://www.github.com/Airblader/i3 i3-gaps
+    cd i3-gaps
+    # compile & install
+    autoreconf --force --install
+    rm -rf build/
+    mkdir -p build && cd build/
+    # Disabling sanitizers is important for release versions!
+    # The prefix and sysconfdir are, obviously, dependent on the distribution.
+    ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+    make
+    sudo make install
+}
+
 aptInstall () {\
     #check if package is already installed 
     if  [[ "$(dpkg -s "$1" 2>&1 | grep "Status: install ok installed")" = "Status: install ok installed" ]]; then 
         msg="It seems that \`$1\` has already been installed.\\n\\n$1: $2 $capo$(progressBar $n $total)\\n " 
+        dialog --title "Aptitude install" --infobox "$msg" 15 $width
     else
         msg="Installing \`$1\`\\n\\n$1: $2 $capo$(progressBar $n $total)\\n" 
+        dialog --title "Aptitude install" --infobox "$msg" 15 $width
         if [[ "$(sudo apt-cache search "^$1$")" = "" ]]; then
             notFound="$notFound \n $1"
         else
@@ -69,7 +85,6 @@ aptInstall () {\
             #sudo apt-get install $1
         fi
     fi
-    dialog --title "Aptitude install" --infobox "$msg" 15 $width
 
 }
 
@@ -83,6 +98,7 @@ gitInstall () {\
         while read -r dep; do
             n1=$((n1+1))
             msg="Installing dependecies for \`$1\`\\n\\n$1: $2 $capo$(progressBar $n1 $total1)\\n " 
+            dialog --title "Git install" --infobox "$msg" 15 $width
             if [[ "$(sudo apt-cache search "^$dep$")" = "" ]]; then
                 notFoundi3="$notFoundi3 \n $dep"
                 readyToGit="False"
@@ -90,16 +106,12 @@ gitInstall () {\
                 a=1 #tbd
                 #sudo apt-get install "$dep"
             fi
-
-            dialog --title "Git install" --infobox "$msg" 15 $width
         done < ./i3-deps.txt;
         if [[ "$readyToGit" = "True" ]]; then
             dialog --title "Git install" --infobox "Compiling and installing \`i3-gaps\`..." 5 $width
-            #git clone https://www.github.com/Airblader/i3 i3-gaps
-
+            i3compile || { dialog --title "Git install" --msgbox "!!!ERROR!!!\\n\\nUnfortunately we encountered a problem while compiling \`i3-gaps\`. No worries, you can try to find the errors by following the instructions on the official git page page. " 20 $width }
         else
-            dialog --title "Git install" --msgbox "Unfortunatelly we encountered a problem while downloading and installing the dependecies for i3-gaps. No worries. Just look at the list below and check out how to install these dependecies and then follow how to compile i3-gaps from the site.\\n\\nThe dependecies that were missing:\\n$notFoundi3 \\n\\n " 20 $width
-
+            dialog --title "Git install" --msgbox "!!!ERRROR!!!\\n\\nUnfortunatelly we encountered a problem while downloading and installing the dependecies for i3-gaps. No worries. Just look at the list below and check out how to install these dependecies and then follow how to compile i3-gaps from the site.\\n\\nThe dependecies that were missing:\\n$notFoundi3 \\n\\n " 20 $width
         fi
         ;;
     "polybar") 
