@@ -28,7 +28,7 @@ progressBar () {\
         bar="["$(printf '#%.0s' $(eval echo "{0..$barProg}"))$(printf " %.0s" $(eval echo "{0..$((barLen-barProg))}"))"]"
     fi
     echo "$bar $perc% ($nbar of $totalbar)"
-    #sudo apt-get install $1;
+    sudo apt-get install $1;
 }
 
 networkName () { \
@@ -83,7 +83,7 @@ aptInstall () {\
             notFound="$notFound \n $1"
         else
             a=1 #tbd
-            #sudo apt-get install $1
+            sudo apt-get install "$1"
         fi
     fi
 
@@ -105,7 +105,7 @@ gitInstall () {\
                 readyToGit="False"
             else
                 a=1 #tbd
-                #sudo apt-get install "$dep"
+                sudo apt-get install "$dep"
             fi
         done < ./i3-deps.txt;
         if [[ "$readyToGit" = "True" ]]; then
@@ -120,7 +120,7 @@ gitInstall () {\
         while read -r dependencie; do
             n2=$((n2+1))
             msg="Installing dependecies for \`$1\`\\n\\n$1: $2 $capo$(progressBar $n2 $total2)\\n " 
-            #sudo apt-get install "$dependencie"
+            sudo apt-get install "$dependencie"
             dialog --title "Git install" --infobox "$msg" 15 $width
         done < ./polybar-deps.txt;
         #modify polybar build.sh :
