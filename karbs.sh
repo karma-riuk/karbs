@@ -110,7 +110,7 @@ gitInstall () {\
         done < ./i3-deps.txt;
         if [[ "$readyToGit" = "True" ]]; then
             dialog --title "Git install" --infobox "Compiling and installing \`i3-gaps\`..." 5 $width
-            i3compile || 
+            #i3compile || 
         else
             dialog --title "Git install" --msgbox "!!!ERRROR!!!\\n\\nUnfortunatelly we encountered a problem while downloading and installing the dependecies for i3-gaps. No worries. Just look at the list below and check out how to install these dependecies and then follow how to compile i3-gaps from the site.\\n\\nThe dependecies that were missing:\\n$notFoundi3 \\n\\n " 20 $width
         fi
