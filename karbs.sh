@@ -56,18 +56,19 @@ preinstallmsg () { \
 }
 
 i3compile () {\
+    errorMsg="!!!ERROR!!!\\n\\nUnfortunately we encountered a problem while compiling \`i3-gaps\`. No worries, you can try to find the errors by following the instructions on the official git page page."
     # clone the repository
     git clone https://www.github.com/Airblader/i3 i3-gaps
     cd i3-gaps
     # compile & install
-    autoreconf --force --install
-    rm -rf build/
+    autoreconf --force --install &> /dev/null
+    rm -rf build/ 
     mkdir -p build && cd build/
     # Disabling sanitizers is important for release versions!
     # The prefix and sysconfdir are, obviously, dependent on the distribution.
-    ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
-    make
-    sudo make install
+    ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers &>/dev/null || dialog --title "Git install" --msgbox "$errorMsg \n\nThe error occured during th \`../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers\` command" 20 $width
+    make &>/dev/null ||  dialog --title "Git install" --msgbox "$errorMsg \n\nThe error occured during th \`make\` command" 20 $width
+    sudo make install  &>/dev/null || dialog --title "Git install" --msgbox "$errorMsg \n\nThe error occured during th \`sudo make install\` command" 20 $width
 }
 
 aptInstall () {\
@@ -109,7 +110,7 @@ gitInstall () {\
         done < ./i3-deps.txt;
         if [[ "$readyToGit" = "True" ]]; then
             dialog --title "Git install" --infobox "Compiling and installing \`i3-gaps\`..." 5 $width
-            i3compile || { dialog --title "Git install" --msgbox "!!!ERROR!!!\\n\\nUnfortunately we encountered a problem while compiling \`i3-gaps\`. No worries, you can try to find the errors by following the instructions on the official git page page. " 20 $width }
+            i3compile || 
         else
             dialog --title "Git install" --msgbox "!!!ERRROR!!!\\n\\nUnfortunatelly we encountered a problem while downloading and installing the dependecies for i3-gaps. No worries. Just look at the list below and check out how to install these dependecies and then follow how to compile i3-gaps from the site.\\n\\nThe dependecies that were missing:\\n$notFoundi3 \\n\\n " 20 $width
         fi
@@ -122,8 +123,8 @@ gitInstall () {\
             #sudo apt-get install "$dependencie"
             dialog --title "Git install" --infobox "$msg" 15 $width
         done < ./polybar-deps.txt;
-        #apt-get install every single dependencie
         #modify polybar build.sh :
+        sed '2s/.*/#&/' 
         # comment out line 40-51 (included, both)
         # change the line 35, replace ON by OFF
         #git clone https://github.com/jaagr/polybar
@@ -142,12 +143,27 @@ installationLoop () {\
         if [[ $lines -gt $width ]]; then capo="\\n\\n\\n\\n"; else capo="\\n\\n\\n\\n\\n"; fi
         case "$tag" in
             "A") aptInstall "$program" "$comment" ;;
-            "G") gitInstall "$program" "$comment" ;;
+            "G") a=1 ;;
         esac
 	done < ./progs.csv ;
     if ! [[ "$notFound" == "" ]]; then
         dialog --title "Packages not found on APT" --msgbox "Not found pacakges: \\n $notFound \\n\\nNothing to worry about, just check them out if they really interest you." 30 60
     fi
+}
+
+dotFiles () {\
+    git clone https://www.github.com/karma-riuk/dotfiles
+    cp .vimrc ~/.vimrc;
+    cp .zshrc ~/.zshrc;
+    cp .oh-my-zsh ~/.oh-my-zsh -r;
+    cp .vim ~/.vim -r;
+    cp .mutt ~/.mutt -r;
+    cp config/i3 ~/.config/i3 -r;
+    cp config/polybar ~/.config/polybar -r;
+    cp config/ranger ~/.config/ranger -r;
+    cp config/htop ~/.config/htop -r;
+    cp .Xdefaults ~/.Xdefaults;
+    cp .Xresources ~/.Xresources;
 }
     
 ###
@@ -165,4 +181,6 @@ changePermsMsg || { clear; exit; }
 preinstallmsg || { clear; exit; }
 
 installationLoop
+
+dotFiles
 

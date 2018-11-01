@@ -3,6 +3,7 @@ A,ranger,is an extensive terminal file manager that everyone likes
 A,calcurse,is a lightweight terminal-based calendar
 A,compton,for transparency and removing screen-tearing
 A,caffeine,is to prevent the desktop becoming idle in full-screen mode
+A,curl, is command line tool for transferring data with URL syntax
 A,dosfstools,allows your computer to access dos-like filesystems
 A,dunst,is a suckless notification system
 A,feh,is a minimal image viewer
@@ -26,10 +27,13 @@ A,unclutter,hides an inactive mouse
 A,unrar,extracts rar's
 A,unzip,unzips zips
 A,vim-pathogen,manages vim plugins
+A,vim-gtk,enables vim clipboards and system clipboards to communicate
 A,w3m,is a terminal browser which can also view images
 A,wget,downloads sites and files on the command line
 A,youtube-dl,can download any YouTube video (or playlist or channel) when given the link
 A,zathura,is a pdf viewer with vim-like bindings
+A,xclip, is a command line interface to X selections
+A,vlc,is video viewer
 A,python3-pip,is a Python package installer
 A,mediainfo,shows audio and video information and is used by ranger as well
 G,i3-gaps,is the main graphical user interface and window manager
